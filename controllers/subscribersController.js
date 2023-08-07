@@ -1,4 +1,3 @@
-const subscriber = require("../models/subscriber");
 const Subscriber = require("../models/subscriber");
 
 exports.getAllSubscribers = (req, res) => {
@@ -31,10 +30,10 @@ exports.saveSubscriber = (req, res) => {
 
   newSubscriber
     .save()
-    .then((result) => {
+    .then(() => {
       res.render("thanks");
     })
     .catch((error) => {
-      if (error) res.send(error);
+      res.send(error);
     });
 };

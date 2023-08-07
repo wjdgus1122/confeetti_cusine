@@ -2,7 +2,7 @@ const layouts = require("express-ejs-layouts");
 const mongoose = require("mongoose");
 var Subscriber = require("./models/subscriber");
 const subscribersController = require("./controllers/subscribersController");
-mongoose.connect("mongodb://localhost:27017/recipe_db", {
+mongoose.connect("mongodb://localhost:27017/confetti_cuisine", {
   useNewUrlParser: true,
 });
 const db = mongoose.connection;
@@ -53,14 +53,7 @@ app.get("/", (req, res) => {
 app.get("/courses", homeController.showCourses);
 app.get("/contact", subscribersController.getSubscriptionPage);
 app.get("/thanks", homeController.postedContactForm);
-app.get(
-  "/subscribers",
-  subscribersController.getAllSubscribers,
-  (req, res, next) => {
-    console.log(req.data);
-    res.send(req.data);
-  }
-);
+app.get("/subscribers", subscribersController.getAllSubscribers);
 
 app.use(layouts);
 app.use(
