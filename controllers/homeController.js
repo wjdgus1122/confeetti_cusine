@@ -36,3 +36,11 @@ exports.showSignUp = (req, res) => {
 exports.postedContactForm = (req, res) => {
   res.render("thanks");
 };
+
+module.exports = {
+  showCourses: (req, res) => {
+    res.render("courses", {
+      offeredCourses: courses,
+    });
+  },
+};

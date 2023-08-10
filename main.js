@@ -2,6 +2,8 @@ const layouts = require("express-ejs-layouts");
 const mongoose = require("mongoose");
 var Subscriber = require("./models/subscriber");
 const subscribersController = require("./controllers/subscribersController");
+const usersController = require("./controllers/userController");
+const userController = require("./controllers/userController");
 mongoose.connect("mongodb://localhost:27017/confetti_cuisine", {
   useNewUrlParser: true,
 });
@@ -54,6 +56,7 @@ app.get("/courses", homeController.showCourses);
 app.get("/contact", subscribersController.getSubscriptionPage);
 app.get("/thanks", homeController.postedContactForm);
 app.get("/subscribers", subscribersController.getAllSubscribers);
+app.get("/users", userController.index);
 
 app.use(layouts);
 app.use(
