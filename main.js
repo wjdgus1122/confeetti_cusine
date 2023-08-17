@@ -2,7 +2,6 @@ const layouts = require("express-ejs-layouts");
 const mongoose = require("mongoose");
 var Subscriber = require("./models/subscriber");
 const subscribersController = require("./controllers/subscribersController");
-const usersController = require("./controllers/userController");
 const userController = require("./controllers/userController");
 mongoose.connect("mongodb://localhost:27017/confetti_cuisine", {
   useNewUrlParser: true,
@@ -41,6 +40,7 @@ myQuery.exec((error, data) => {
 });
 
 const express = require("express"),
+  router = express.Router(),
   app = express();
 
 app.set("port", process.env.PORT || 3000);
@@ -57,6 +57,13 @@ app.get("/contact", subscribersController.getSubscriptionPage);
 app.get("/thanks", homeController.postedContactForm);
 app.get("/subscribers", subscribersController.getAllSubscribers);
 app.get("/users", userController.index);
+router.get("/users/new", userController.new);
+router.get("/users/:id", userController.show, userController.showView);
+router.post(
+  "/users/create",
+  userController.create,
+  userController.redirectView
+);
 
 app.use(layouts);
 app.use(
