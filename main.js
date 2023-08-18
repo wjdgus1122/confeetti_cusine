@@ -1,5 +1,6 @@
 const layouts = require("express-ejs-layouts");
 const mongoose = require("mongoose");
+const methodOverride = require("method-override");
 var Subscriber = require("./models/subscriber");
 const subscribersController = require("./controllers/subscribersController");
 const userController = require("./controllers/userController");
@@ -59,10 +60,21 @@ app.get("/subscribers", subscribersController.getAllSubscribers);
 app.get("/users", userController.index);
 router.get("/users/new", userController.new);
 router.get("/users/:id", userController.show, userController.showView);
+router.get("/users/:id/edit", userController.edit);
+router.put(
+  "/users/:id/update",
+  userController.update,
+  userController.redirectView
+);
 router.post(
   "/users/create",
   userController.create,
   userController.redirectView
+);
+router.use(
+  methodOverride("_method", {
+    methods: ["POST", "GET"],
+  })
 );
 
 app.use(layouts);

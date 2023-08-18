@@ -19,6 +19,20 @@
     </tr>
 </table>
 
+<div>
+    <a href="/users">View all users</a>
+</div>
+<div>
+    <a href="<%=`/users/${user._id}/edit` %>">
+        Edit User Details
+    </a>
+</div>
+<div>
+    <a href="<%=`/users/${user._id}/delete?_method=DELETE` %>" onclick="return confirm("Are you sure want to delete this record?")">
+        Delete
+    </a>
+</div>
+
 <% if (user.subscribedAccount) { %>
     <h4 class="center"> This user has a
         <a href="<%=`/subscribers/${user.subscribedAccount}` %>">
