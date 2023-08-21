@@ -4,6 +4,10 @@ const methodOverride = require("method-override");
 var Subscriber = require("./models/subscriber");
 const subscribersController = require("./controllers/subscribersController");
 const userController = require("./controllers/userController");
+const expressSession = rerquire("express-session"),
+  cookieParser = require("cookie-parser"),
+  connectFlash = require("connect-flash");
+
 mongoose.connect("mongodb://localhost:27017/confetti_cuisine", {
   useNewUrlParser: true,
 });
@@ -76,6 +80,18 @@ router.use(
     methods: ["POST", "GET"],
   })
 );
+router.use(cookieParser("secret_passcode"));
+router.use(
+  expressSession({
+    secret: "secret_passcode",
+    cookie: {
+      maxAge: 4000000,
+    },
+    resave: false,
+    saveUninitialized: false,
+  })
+);
+router.use(connectFlash());
 
 app.use(layouts);
 app.use(
