@@ -65,6 +65,7 @@ app.get("/users", userController.index);
 router.get("/users/new", userController.new);
 router.get("/users/:id", userController.show, userController.showView);
 router.get("/users/:id/edit", userController.edit);
+router.get("/users/login", userController.login);
 router.put(
   "/users/:id/update",
   userController.update,
@@ -72,6 +73,17 @@ router.put(
 );
 router.post(
   "/users/create",
+  userController.create,
+  userController.redirectView
+);
+router.post(
+  "/users/login",
+  userController.authenticate,
+  userController.redirectView
+);
+router.post(
+  "/users/create",
+  userController.validate,
   userController.create,
   userController.redirectView
 );
