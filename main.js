@@ -7,6 +7,8 @@ const userController = require("./controllers/userController");
 const expressSession = rerquire("express-session"),
   cookieParser = require("cookie-parser"),
   connectFlash = require("connect-flash");
+const passport = require("passport");
+const User = require("./models/user");
 
 mongoose.connect("mongodb://localhost:27017/confetti_cuisine", {
   useNewUrlParser: true,
@@ -104,6 +106,8 @@ router.use(
   })
 );
 router.use(connectFlash());
+router.use(passport.initialize());
+router.use(passport.session());
 
 app.use(layouts);
 app.use(
@@ -126,6 +130,10 @@ app.post("/", (req, res) => {
   console.log(req.query);
   res.send("POST Successful!");
 });
+
+passport.use(User.createStrategy());
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 app.listen(app.get("port"), () => {
   console.log(`Server running at http://localhost:${app.get("port")}`);

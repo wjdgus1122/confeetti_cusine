@@ -1,4 +1,5 @@
 const subscriber = require("./subscriber");
+const passportLocalMongoose = require("passport-local-mongoose");
 
 const mongoose = require("mongoose"),
   { Schema } = mongoose,
@@ -76,5 +77,9 @@ userSchema.methods.passwordComparison = function (inputPassword) {
   let user = this;
   return brypt.compare(inputPassword, user.password);
 };
+
+userSchema.plugin(passportLocalMongoose, {
+  usernameField: "email",
+});
 
 module.exports = mongoose.model("User", userSchema);
