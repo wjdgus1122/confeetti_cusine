@@ -68,6 +68,8 @@ router.get("/users/new", userController.new);
 router.get("/users/:id", userController.show, userController.showView);
 router.get("/users/:id/edit", userController.edit);
 router.get("/users/login", userController.login);
+router.get("/users/logout", userController.logout, userController.redirectView);
+
 router.put(
   "/users/:id/update",
   userController.update,
@@ -75,6 +77,7 @@ router.put(
 );
 router.post(
   "/users/create",
+  userController.validate,
   userController.create,
   userController.redirectView
 );
@@ -108,6 +111,21 @@ router.use(
 router.use(connectFlash());
 router.use(passport.initialize());
 router.use(passport.session());
+router.use(cookieParser("secretCuisine123"));
+router.use(
+  expressSession({
+    secret: "secretCuisine123",
+    cookie: {
+      maxAge: 4000000,
+    },
+    resave: false,
+    saveUninitialized: false,
+  })
+);
+router.use((req, res, next) => {
+  res.locals.flashMessages = req.flash();
+  next();
+});
 
 app.use(layouts);
 app.use(
