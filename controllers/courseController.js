@@ -18,7 +18,7 @@ module.exports = {
       };
     } else {
       errorObject = {
-        status: httpStatus.INTERNAL_SERVER_ERROR,
+        status: httpStatus.OK,
         message: "Unknown Error.",
       };
     }
