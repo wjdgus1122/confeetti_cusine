@@ -1,5 +1,6 @@
 const subscriber = require("./subscriber");
 const passportLocalMongoose = require("passport-local-mongoose");
+const randToken = require("rand-token");
 
 const mongoose = require("mongoose"),
   { Schema } = mongoose,
@@ -71,6 +72,8 @@ userSchema.pre("save", function (next) {
   } else {
     next();
   }
+
+  if (!user.apiToken) user.apiToken = randToken.generate(16);
 });
 
 userSchema.methods.passwordComparison = function (inputPassword) {

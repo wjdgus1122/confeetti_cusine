@@ -52,6 +52,7 @@ const express = require("express"),
 
 app.set("port", process.env.PORT || 3000);
 app.set("view engine", "ejs");
+app.set("token", process.env.TOKEN || "recipeT0k3n");
 
 app.get("/items/:vegetable", homeController.sendReqParam);
 
