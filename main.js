@@ -9,6 +9,7 @@ const expressSession = rerquire("express-session"),
   connectFlash = require("connect-flash");
 const passport = require("passport");
 const User = require("./models/user");
+const chatController = require("./controllers/chatController")(io);
 
 mongoose.connect("mongodb://localhost:27017/confetti_cuisine", {
   useNewUrlParser: true,
@@ -154,6 +155,7 @@ passport.use(User.createStrategy());
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-app.listen(app.get("port"), () => {
-  console.log(`Server running at http://localhost:${app.get("port")}`);
-});
+const server = app.listen(app.get("port"), () => {
+    console.log(`Server running at http://localhost:${app.get("port")}`);
+  }),
+  io = require("socket.io")(server);

@@ -43,4 +43,7 @@ module.exports = {
       offeredCourses: courses,
     });
   },
+  chat: (req, res) => {
+    res.render("chat");
+  },
 };
