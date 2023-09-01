@@ -48,6 +48,20 @@ $(document).ready(() => {
     });
   });
 
+  socket.on("user disconnected", () => {
+    displayMessage({
+      userName: "Notice",
+      content: "User left the chat",
+    });
+  });
+
+  socket.on("message", (message) => {
+    displayMessage(message);
+    for (let i = 0; i < 2; i++) {
+      $(".chat-icon").fadeOut(200).fadeIn(200);
+    }
+  });
+
   let displayMessage = (message) => {
     $("#chat").prepend(
       $("<li>").html(`
